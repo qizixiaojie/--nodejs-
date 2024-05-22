@@ -1,6 +1,6 @@
 import { createStore } from 'vuex'
 import createPersistedState from 'vuex-persistedstate'
-export default createStore({
+export default createStore({ 
   state: {
     isGetterRouter: false,
     isCollapsed: false
