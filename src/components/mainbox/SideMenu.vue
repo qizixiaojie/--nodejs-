@@ -43,7 +43,6 @@
 import {HomeFilled,Avatar,UserFilled,MessageBox,Reading,Pointer} from '@element-plus/icons-vue'
 import { useRoute } from 'vue-router';
 const route=useRoute()
-console.log(route.fullPath);
 </script>
 <style lang="scss" scoped>
 .el-aside {

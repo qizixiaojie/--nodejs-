@@ -23,6 +23,7 @@ import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { loadSlim } from 'tsparticles-slim'
 import { loadFull } from 'tsparticles'
+import axios from 'axios'
 
 const loginForm = reactive({
   username: '',
@@ -45,8 +46,11 @@ const submitForm = () => {
   //1.校验表单
   loginFormRef.value.validate(valid => {
     if (valid) {
-      localStorage.setItem('token', 'qizixiaojie')
-      router.push('/index')
+      // localStorage.setItem('token', 'qizixiaojie')
+      axios.post('http://127.0.0.1:3000/adminapi/user/login', loginForm).then(res => {
+        console.log(res.data)
+      })
+      // router.push('/index')
     }
   })
   //2.拿到表单内容，提交后台

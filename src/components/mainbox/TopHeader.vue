@@ -11,9 +11,7 @@
       <el-dropdown>
         <span class="el-dropdown-link">
           <el-icon :size="30"><user /></el-icon>
-          <el-icon class="el-icon--right">
-            <arrow-down />
-          </el-icon>
+          <el-icon class="el-icon--right"> </el-icon>
         </span>
         <template #dropdown>
           <el-dropdown-menu>
@@ -27,7 +25,7 @@
 </template>
 <script setup>
 import { useStore } from 'vuex'
-import { Menu, User } from '@element-plus/icons-vue'
+import { Menu, User, ArrowDown } from '@element-plus/icons-vue'
 import { useRouter } from 'vue-router'
 const store = useStore()
 const handleCollapsed = () => {
