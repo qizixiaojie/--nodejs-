@@ -24,7 +24,7 @@ import { useRouter } from 'vue-router'
 import { loadSlim } from 'tsparticles-slim'
 import { loadFull } from 'tsparticles'
 import axios from 'axios'
-
+import { ElMessage } from 'element-plus'
 const loginForm = reactive({
   username: '',
   password: ''
@@ -46,9 +46,18 @@ const submitForm = () => {
   //1.校验表单
   loginFormRef.value.validate(valid => {
     if (valid) {
-      // localStorage.setItem('token', 'qizixiaojie')
-      axios.post('http://127.0.0.1:3000/adminapi/user/login', loginForm).then(res => {
+      axios.post('/adminapi/user/login', loginForm).then(res => {
         console.log(res.data)
+        if (res.data.ActionType === 'OK') {
+          console.log('asdsasda')
+          ElMessage({ message: '成功登入', type: 'success' })
+          //延时跳转
+
+          router.push('/index')
+        } else {
+          //给出提示消息
+          ElMessage.error('用户名和密码不匹配')
+        }
       })
       // router.push('/index')
     }
