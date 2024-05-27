@@ -25,6 +25,9 @@ import { loadSlim } from 'tsparticles-slim'
 import { loadFull } from 'tsparticles'
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
+import { useStore } from 'vuex'
+//引入仓库
+const store = useStore()
 const loginForm = reactive({
   username: '',
   password: ''
@@ -51,9 +54,15 @@ const submitForm = () => {
         if (res.data.ActionType === 'OK') {
           console.log('asdsasda')
           ElMessage({ message: '成功登入', type: 'success' })
-          //延时跳转
 
-          router.push('/index')
+          //存储用户信息
+          store.commit('changeUserInfo', res.data.data)
+
+          //延时跳转
+          console.log(res.data.data)
+          setTimeout(() => {
+            router.push('/index')
+          }, 1000)
         } else {
           //给出提示消息
           ElMessage.error('用户名和密码不匹配')

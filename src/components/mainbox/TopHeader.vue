@@ -7,11 +7,10 @@
       <span style="margin-left: 10px">企业门户管理系统</span>
     </div>
     <div class="right">
-      <span style="margin-right: 10px">欢迎 admin 回来</span>
+      <span style="margin-right: 10px">欢迎 {{ store.state.userInfo.username }} 回来</span>
       <el-dropdown>
-        <span class="el-dropdown-link">
-          <el-icon :size="30"><user /></el-icon>
-          <el-icon class="el-icon--right"> </el-icon>
+        <span class="el-dropdown-link" style="outline: none">
+          <el-icon :size="30" color="white"><user /></el-icon>
         </span>
         <template #dropdown>
           <el-dropdown-menu>
@@ -25,7 +24,7 @@
 </template>
 <script setup>
 import { useStore } from 'vuex'
-import { Menu, User, ArrowDown } from '@element-plus/icons-vue'
+import { Menu, User } from '@element-plus/icons-vue'
 import { useRouter } from 'vue-router'
 const store = useStore()
 const handleCollapsed = () => {
@@ -38,6 +37,7 @@ const handleCenter = () => {
 }
 const handeLogout = () => {
   localStorage.removeItem('token')
+  store.commit('clearUserInfo')
   router.push('/login')
 }
 </script>
