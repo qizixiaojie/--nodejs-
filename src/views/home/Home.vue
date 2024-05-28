@@ -56,9 +56,9 @@ const welcomeText = computed(() => (new Date().getHours() < 12 ? '，要开心�
 .el-carousel__item:nth-child(2n + 1) {
   background-color: #d3dce6;
 }
-:deep div.el-divider.el-divider--vertical {
-  border: none;
-}
+// :deep div.el-divider.el-divider--vertical {
+//   border: none;
+// }
 .welcome {
   line-height: 100px;
 }
