@@ -38,10 +38,14 @@
             </el-form-item>
 
             <el-form-item label="头像" prop="avatar">
-              <el-upload class="avatar-uploader" action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15" :show-file-list="false" :auto-upload="false">
+              <el-upload class="avatar-uploader" action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15" :show-file-list="false" :auto-upload="false" :on-change="handleChange">
                 <img v-if="userForm.avatar" :src="userForm.avatar" class="avatar" />
                 <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
               </el-upload>
+            </el-form-item>
+
+            <el-form-item>
+              <el-button type="primary" @click="submitForm()">更新</el-button>
             </el-form-item>
           </el-form>
         </el-card>
@@ -53,6 +57,7 @@
 import { useStore } from 'vuex'
 import { Plus } from '@element-plus/icons-vue'
 import { computed, ref, reactive } from 'vue'
+import axios from 'axios'
 //渲染头像
 const store = useStore()
 const avataUrl = computed(() => (store.state.userInfo.avatar ? store.state.userInfo.avatar : `https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png`))
@@ -64,7 +69,8 @@ const userForm = reactive({
   username,
   gender,
   introduction,
-  avatar
+  avatar,
+  file: null
 })
 const userFormRules = reactive({
   username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
@@ -78,6 +84,36 @@ const options = [
   { label: '男', value: 1 },
   { label: '女', value: 2 }
 ]
+//每次选择图片之后的回调,显示图片
+const handleChange = file => {
+  // console.log(file.raw)
+  userForm.avatar = URL.createObjectURL(file.raw)
+  userForm.file = file.raw
+}
+//更新提交方法,前提经过表单校验validate
+const submitForm = () => {
+  userFormRef.value.validate(valid => {
+    if (valid) {
+      // console.log('submit', userForm)
+      //变成表单数据进行上传
+      const params = new FormData()
+      for (let i in userForm) {
+        params.append(i, userForm[i])
+      }
+      // console.log(params)
+      axios
+        .post('/adminapi/user/upload', params, {
+          headers: {
+            //如果是传入多个文件内容就是这样子
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+        .then(res => {
+          console.log(res.data)
+        })
+    }
+  })
+}
 </script>
 <style lang="scss" scoped>
 .el-row {
@@ -105,5 +141,9 @@ const options = [
   width: 178px;
   height: 178px;
   text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
 }
 </style>
