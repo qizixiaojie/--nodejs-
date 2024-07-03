@@ -4,7 +4,7 @@
       <el-icon @click="handleCollapsed">
         <Menu />
       </el-icon>
-      <span style="margin-left: 10px">企业门户管理系统</span>
+      <span style="margin-left: 10px">柒子小姐诊所管理系统</span>
     </div>
     <div class="right">
       <span style="margin-right: 10px">欢迎 {{ store.state.userInfo.username }} 回来</span>

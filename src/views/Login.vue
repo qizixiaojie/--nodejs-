@@ -34,14 +34,8 @@ const loginForm = reactive({
 }) //表单绑定的响应式对象
 const loginFormRef = ref() //表单的引用对象
 const loginRules = reactive({
-  username: [
-    { required: true, message: '请输入用户名', trigger: 'blur' },
-    { min: 3, max: 5, message: 'Length should be 3 to 5', trigger: 'blur' }
-  ],
-  password: [
-    { required: true, message: '请输入密码', trigger: 'blur' },
-    { pattern: /^.{8,}$/, message: 'Password must be at least 8 characters long', trigger: 'blur' }
-  ]
+  username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+  password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
 })
 const router = useRouter()
 //提交表单数据

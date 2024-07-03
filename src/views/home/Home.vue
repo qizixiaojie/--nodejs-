@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-page-header icon="" title="企业门户网站管理系统">
+    <el-page-header icon="" title="柒子小姐诊所管理系统">
       <template #content>
         <span class="text-large font-600 mr-3"> 首页 </span>
       </template>
@@ -34,7 +34,7 @@ import { useStore } from 'vuex'
 import { computed } from 'vue'
 const store = useStore()
 
-const avataUrl = computed(() => (store.state.userInfo.avatar ? store.state.userInfo.avatar : `https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png`))
+const avataUrl = computed(() => (store.state.userInfo.avatar ? 'http://localhost:3000' + store.state.userInfo.avatar : `https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png`))
 const welcomeText = computed(() => (new Date().getHours() < 12 ? '，要开心啊每一天' : '，喝杯咖啡提提神吧'))
 </script>
 <style lang="scss" scoped>

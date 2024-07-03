@@ -2,12 +2,11 @@
 
 import Home from '@/views/home/Home.vue'
 import Center from '@/views/center/Center.vue'
-import UserAdd from '@/views/user-manage/UserAdd.vue'
-import UserList from '@/views/user-manage/UserList.vue'
-import NewsAdd from '@/views/news-manage/NewsAdd.vue'
-import NewsList from '@/views/news-manage/NewsList.vue'
-import ProductList from '@/views/product-manage/ProductList.vue'
-import ProductAdd from '@/views/product-manage/ProductAdd.vue'
+import  DoctorAdd from '@/views/Doctor/DoctorAdd.vue'
+import DoctorList from '@/views/Doctor/DoctorList.vue'
+import  HospitalAdd from '@/views/Hospital/HospitalAdd.vue'
+import HospitalList from '@/views/Hospital/HospitalList.vue'
+
 import NotFound from '@/views/notfount/NotFound.vue'
 const routes = [
   {
@@ -19,28 +18,20 @@ const routes = [
     component: Center
   },
   {
-    path: '/user-manage/useradd',
-    component: UserAdd
+    path: '/Hospital/HospitalAdd',
+    component: HospitalAdd
   },
   {
-    path: '/user-manage/userlist',
-    component: UserList
+    path: '/Hospital/HospitalList',
+    component: HospitalList
   },
   {
-    path: '/news-manage/newsadd',
-    component: NewsAdd
+    path: '/Doctor/DoctorAdd',
+    component: DoctorAdd
   },
   {
-    path: '/news-manage/newslist',
-    component: NewsList
-  },
-  {
-    path: '/product-manage/productlist',
-    component: ProductList
-  },
-  {
-    path: '/product-manage/productadd',
-    component: ProductAdd
+    path: '/Doctor/DoctorList',
+    component: DoctorList
   },
   {
     path:'/',

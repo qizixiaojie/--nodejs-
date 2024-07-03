@@ -37,15 +37,12 @@
               <el-input v-model="userForm.introduction" type="textarea" />
             </el-form-item>
 
-            <el-form-item label="头像" prop="avatar">
-              <el-upload class="avatar-uploader" action="https://run.mocky.io/v3/9d059bf9-4660-45f2-925d-ce80ad6c4d15" :show-file-list="false" :auto-upload="false" :on-change="handleChange">
-                <img v-if="userForm.avatar" :src="userForm.avatar" class="avatar" />
-                <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
-              </el-upload>
+            <el-form-item>
+              <Upload :avatar="userForm.avatar" @keywinchange="handleChange" />
             </el-form-item>
 
-            <el-form-item>
-              <el-button type="primary" @click="submitForm()">更新</el-button>
+            <el-form-item style="margin-left: 50%">
+              <el-button type="primary" @click="submitForm()" style="width: 120px; height: 50px; font-size: 20px">更新</el-button>
             </el-form-item>
           </el-form>
         </el-card>
@@ -55,12 +52,15 @@
 </template>
 <script setup>
 import { useStore } from 'vuex'
-import { Plus } from '@element-plus/icons-vue'
+import Upload from '@/components/upload/Upload.vue'
+// import { Plus } from '@element-plus/icons-vue'
 import { computed, ref, reactive } from 'vue'
-import axios from 'axios'
+// import axios from 'axios'
+import upload from '@/util/upload'
+import { ElMessage } from 'element-plus'
 //渲染头像
 const store = useStore()
-const avataUrl = computed(() => (store.state.userInfo.avatar ? store.state.userInfo.avatar : `https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png`))
+const avataUrl = computed(() => (store.state.userInfo.avatar ? 'http://localhost:3000' + store.state.userInfo.avatar : `https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png`))
 
 //制定校验规则
 const { username, gender, introduction, avatar } = store.state.userInfo
@@ -87,30 +87,20 @@ const options = [
 //每次选择图片之后的回调,显示图片
 const handleChange = file => {
   // console.log(file.raw)
-  userForm.avatar = URL.createObjectURL(file.raw)
-  userForm.file = file.raw
+  userForm.avatar = URL.createObjectURL(file)
+  userForm.file = file
 }
 //更新提交方法,前提经过表单校验validate
 const submitForm = () => {
-  userFormRef.value.validate(valid => {
+  userFormRef.value.validate(async valid => {
     if (valid) {
       // console.log('submit', userForm)
-      //变成表单数据进行上传
-      const params = new FormData()
-      for (let i in userForm) {
-        params.append(i, userForm[i])
+      const res = await upload('/adminapi/user/upload', userForm)
+      if (res.ActionType === 'OK') {
+        // console.log('进来了')
+        store.commit('changeUserInfo', res.data)
+        ElMessage.success('头像更新成功')
       }
-      // console.log(params)
-      axios
-        .post('/adminapi/user/upload', params, {
-          headers: {
-            //如果是传入多个文件内容就是这样子
-            'Content-Type': 'multipart/form-data'
-          }
-        })
-        .then(res => {
-          console.log(res.data)
-        })
     }
   })
 }
@@ -121,29 +111,5 @@ const submitForm = () => {
   .box-card {
     text-align: center;
   }
-}
-:deep .avatar-uploader .el-upload {
-  border: 1px dashed var(--el-border-color);
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: var(--el-transition-duration-fast);
-}
-
-:deep .avatar-uploader .el-upload:hover {
-  border-color: var(--el-color-primary);
-}
-
-:deep .el-icon.avatar-uploader-icon {
-  font-size: 28px;
-  color: #8c939d;
-  width: 178px;
-  height: 178px;
-  text-align: center;
-}
-.avatar {
-  width: 178px;
-  height: 178px;
 }
 </style>
