@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-page-header icon="" title="企业门户网站管理系统">
+    <el-page-header icon="" title="柒子小姐诊所网站管理系统">
       <template #content>
         <span class="text-large font-600 mr-3"> 个人中心 </span>
       </template>
