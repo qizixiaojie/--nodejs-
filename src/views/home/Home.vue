@@ -22,7 +22,7 @@
       </template>
       <el-carousel :interval="4000" type="card" height="200px">
         <el-carousel-item v-for="item in 6" :key="item">
-          <h3 text="2xl" justify="center">{{ item }}</h3>
+         <img clas="img" src="../../assets/user_上传图片.jpg">
         </el-carousel-item>
       </el-carousel>
     </el-card>
@@ -41,7 +41,9 @@ const welcomeText = computed(() => (new Date().getHours() < 12 ? '，要开心�
 .el-card {
   margin-top: 50px;
 }
-.el-carousel__item h3 {
+.el-carousel__item img {
+  width: 100%;
+  height: 100%;
   color: #475669;
   opacity: 0.75;
   line-height: 200px;
@@ -62,4 +64,5 @@ const welcomeText = computed(() => (new Date().getHours() < 12 ? '，要开心�
 .welcome {
   line-height: 100px;
 }
+
 </style>
