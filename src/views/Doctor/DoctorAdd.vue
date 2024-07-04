@@ -98,9 +98,9 @@ const truePush = (addFormRef) => {
     if (valid) {
       console.log(addForm);
       const result = reqDoctor_add(addForm);
-      // setTimeout(() => {
-      //   location.reload();
-      // }, 3000);
+      setTimeout(() => {
+        location.reload();
+      }, 3000);
       if (result.code == 200) {
         ElMessage({
           message: "提交成功三秒后刷新表单",
@@ -120,9 +120,9 @@ const changeData = (addFormRef) => {
       console.log(addForm);
       reqDoctor_upload(addForm);
 
-      // setTimeout(() => {
-      //   location.reload();
-      // }, 3000);
+      setTimeout(() => {
+        location.reload();
+      }, 3000);
 
       ElMessage({
         message: "修改成功三秒后刷新表单",
