@@ -32,6 +32,9 @@
           <el-form-item label="请您输入您的部门" prop="depname">
             <el-input v-model="addForm.sub_depname" />
           </el-form-item>
+          <el-form-item label="介绍一下你自己" prop="introduce">
+            <el-input v-model="addForm.introduce" />
+          </el-form-item>
         </el-form>
         <el-button
           style="margin-top: 100px; margin-left: 600px"
@@ -58,6 +61,7 @@ const addForm = reactive({
   hosname: "", //输入医院
   position: "", //输入职位
   sub_depname: "", //输入部门
+  introduce: "", //介绍一下你自己
 });
 const addFormRules = reactive({
   name: [
@@ -70,10 +74,14 @@ const addFormRules = reactive({
   ],
   position: [
     { required: true, message: "请输入数据", trigger: "blur" },
-    { min: 3, message: "3个字符以上", trigger: "blur" },
+    { min: 2, message: "2个字符以上", trigger: "blur" },
   ],
   sub_depname: [
-    { required: true, message: "请输入数据aaaaaaa", trigger: "blur" },
+    { required: true, message: "请输入数据", trigger: "blur" },
+    { min: 3, message: "3个字符以上", trigger: "blur" },
+  ],
+  introduce: [
+    { required: true, message: "请输入数据", trigger: "blur" },
     { min: 3, message: "3个字符以上", trigger: "blur" },
   ],
 });
@@ -82,14 +90,16 @@ const truePush = (addFormRef) => {
   addFormRef.validate((valid) => {
     if (valid) {
       console.log(addForm);
-      reqDoctor_add(addForm);
-      ElMessage({
-        message: "提交成功三秒后刷新表单",
-        type: "success",
-      });
-      // setTimeout(() => {
-      //   location.reload();
-      // }, 3000);
+      const result = reqDoctor_add(addForm);
+      if (result.code == 200) {
+        ElMessage({
+          message: "提交成功三秒后刷新表单",
+          type: "success",
+        });
+        setTimeout(() => {
+          location.reload();
+        }, 3000);
+      }
     } else {
       console.log("error submit!");
     }

@@ -152,14 +152,16 @@ const truePush = (addFormRef) => {
   addFormRef.validate((valid) => {
     if (valid) {
       addForm.logoData = "";
-      reqHospial_add(addForm);
-      ElMessage({
-        message: "提交成功三秒后刷新表单",
-        type: "success",
-      });
-      // setTimeout(() => {
-      //   location.reload();
-      // }, 3000);
+      const result = reqHospial_add(addForm);
+      if (result.code == 200) {
+        ElMessage({
+          message: "提交成功三秒后刷新表单",
+          type: "success",
+        });
+        setTimeout(() => {
+          location.reload();
+        }, 3000);
+      }
     } else {
       console.log("error submit!");
     }
