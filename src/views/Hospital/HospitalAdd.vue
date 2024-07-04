@@ -160,13 +160,19 @@ const changeAvatarUpload = () => {
 const truePush = (addFormRef) => {
   addFormRef.validate((valid) => {
     if (valid) {
-      addForm.logoData = "";
+      // addForm.logoData = "";
+      // const result = reqHospial_add(addForm);
+      const form = new FormData();
+      for (let [k, v] in Object.entries(addForm)) {
+        console.log(k, v);
+        form.append(k, v);
+      }
       console.log(addForm);
+      console.log(form);
       const result = reqHospial_add(addForm);
-
-      setTimeout(() => {
-        location.reload();
-      }, 1000);
+      // setTimeout(() => {
+      //   location.reload();
+      // }, 1000);
 
       if (result.code == 200) {
         ElMessage({
@@ -175,7 +181,10 @@ const truePush = (addFormRef) => {
         });
       }
     } else {
-      console.log("error submit!");
+      ElMessage({
+        message: "提交失败",
+        type: "error",
+      });
     }
   });
 };
@@ -184,13 +193,18 @@ const changeData = (addFormRef) => {
   console.log("~~~~~~~~~~~~~~~~~~~~~");
   addFormRef.validate((valid) => {
     if (valid) {
-      addForm.logoData = "";
+      const form = new FormData();
+      for (let [k, v] in Object.entries(addForm)) {
+        console.log(k, v);
+        form.append(k, v);
+      }
       console.log(addForm);
+      console.log(form);
       const result = reqHospial_upload(addForm);
 
-      // setTimeout(() => {
-      //   location.reload();
-      // }, 1000);
+      setTimeout(() => {
+        location.reload();
+      }, 1000);
 
       if (result.code == 200) {
         ElMessage({
@@ -199,7 +213,10 @@ const changeData = (addFormRef) => {
         });
       }
     } else {
-      console.log("error submit!");
+      ElMessage({
+        message: "修改失败",
+        type: "error",
+      });
     }
   });
 };

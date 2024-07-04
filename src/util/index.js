@@ -5,7 +5,7 @@ import { ElMessage } from 'element-plus'; // 确保已正确安装和引入Eleme
 
 const request = axios.create({
   baseURL: 'http://localhost:8080',
-  timeout: 5000
+  timeout: 15000
 });
 
 // 请求拦截器（如果需要，取消注释并正确使用）  
@@ -26,6 +26,7 @@ request.interceptors.response.use((response) => {
   return response.data;
 }, (error) => {
   //处理http网络错误
+  console.log(error)
   return Promise.reject(new Error(error.message))
 })
 export default request;

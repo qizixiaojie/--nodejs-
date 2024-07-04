@@ -2,7 +2,7 @@ import request from "@/util";
 
 //添加医院信息
 export const reqHospial_add = (data) => {
-  return request.post('/admin_hospital/hospital_add', data);
+  return request.post('/admin_hospital/hospital_add', data,{headers:{'Content-Type': 'multipart/form-data'}});
 };
 //获取医院列表信息
 export const reqHospial_getList = () => {
@@ -14,5 +14,5 @@ export const reqHospial_Delete = (id) => {
 };
 //更改医院信息
 export const reqHospial_upload = (data) => {
-  return request.post('/admin_hospital/hospital_update', data);
+  return request.post('/admin_hospital/hospital_update', data,{headers:{'Content-Type': 'multipart/form-data'}});
 }
