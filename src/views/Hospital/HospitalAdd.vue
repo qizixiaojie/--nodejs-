@@ -59,11 +59,18 @@
           </el-form-item>
         </el-form>
         <el-button
-          style="margin-top: 100px; margin-left: 600px"
+          style="margin-top: 100px; margin-left: 400px"
           size="large"
           type="primary"
           @click="truePush(addFormRef)"
           >确定提交</el-button
+        >
+        <el-button
+          style="margin-top: 100px; margin-left: 200px"
+          size="large"
+          type="primary"
+          @click="changeData(addFormRef)"
+          >确定修改</el-button
         >
       </el-card>
     </div>
@@ -73,8 +80,9 @@
 <script setup>
 import { reactive, ref } from "vue";
 import { Plus } from "@element-plus/icons-vue";
-import { reqHospial_add } from "@/api/hospital/index.js";
+import { reqHospial_add, reqHospial_upload } from "@/api/hospital/index.js";
 import { ElMessage } from "element-plus";
+
 //定义等级数据
 const options = Array.from({ length: 3 }).map((_, idx) => ({
   value: `${idx + 1}`,
@@ -123,6 +131,7 @@ const logoData = ref();
 const uploadImageFile = (options) => {
   let that = this;
   let file = options.file;
+  console.log(file);
   addForm.logoData = URL.createObjectURL(file);
   var reader = new FileReader();
   reader.readAsDataURL(file);
@@ -152,6 +161,7 @@ const truePush = (addFormRef) => {
   addFormRef.validate((valid) => {
     if (valid) {
       addForm.logoData = "";
+      console.log(addForm);
       const result = reqHospial_add(addForm);
 
       setTimeout(() => {
@@ -169,6 +179,32 @@ const truePush = (addFormRef) => {
     }
   });
 };
+//确定修改
+const changeData = (addFormRef) => {
+  console.log("~~~~~~~~~~~~~~~~~~~~~");
+  addFormRef.validate((valid) => {
+    if (valid) {
+      addForm.logoData = "";
+      console.log(addForm);
+      const result = reqHospial_upload(addForm);
+
+      // setTimeout(() => {
+      //   location.reload();
+      // }, 1000);
+
+      if (result.code == 200) {
+        ElMessage({
+          message: "修改成功",
+          type: "sucess",
+        });
+      }
+    } else {
+      console.log("error submit!");
+    }
+  });
+};
+
+const imageUrl = ref("");
 </script>
 
 <style scoped>
@@ -205,6 +241,32 @@ const truePush = (addFormRef) => {
       height: 178px;
       text-align: center;
     }
+  }
+
+  .avatar-uploader .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
+  .avatar-uploader .el-upload {
+    border: 1px dashed var(--el-border-color);
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: var(--el-transition-duration-fast);
+  }
+
+  .avatar-uploader .el-upload:hover {
+    border-color: var(--el-color-primary);
+  }
+
+  .el-icon.avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    text-align: center;
   }
 }
 </style>

@@ -12,3 +12,7 @@ export const reqHospial_getList = () => {
 export const reqHospial_Delete = (id) => {
   return request.post('/admin_hospital/hospital_delete', { id });
 };
+//更改医院信息
+export const reqHospial_upload = (data) => {
+  return request.post('/admin_hospital/hospital_update', data);
+}
