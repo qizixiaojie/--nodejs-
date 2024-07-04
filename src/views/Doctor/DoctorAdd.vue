@@ -91,14 +91,14 @@ const truePush = (addFormRef) => {
     if (valid) {
       console.log(addForm);
       const result = reqDoctor_add(addForm);
+      setTimeout(() => {
+        location.reload();
+      }, 3000);
       if (result.code == 200) {
         ElMessage({
           message: "提交成功三秒后刷新表单",
           type: "success",
         });
-        setTimeout(() => {
-          location.reload();
-        }, 3000);
       }
     } else {
       console.log("error submit!");

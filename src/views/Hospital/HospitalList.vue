@@ -67,7 +67,7 @@ const pushData = () => {
   reqHospial_Delete(id.value);
   setTimeout(() => {
     location.reload();
-  }, 3000);
+  }, 1000);
 };
 </script>
 
