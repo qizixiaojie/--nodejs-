@@ -37,11 +37,18 @@
           </el-form-item>
         </el-form>
         <el-button
-          style="margin-top: 100px; margin-left: 600px"
+          style="margin-top: 100px; margin-left: 400px"
           size="large"
           type="primary"
           @click="truePush(addFormRef)"
           >确定提交</el-button
+        >
+        <el-button
+          style="margin-top: 100px; margin-left: 200px"
+          size="large"
+          type="primary"
+          @click="changeData(addFormRef)"
+          >确定修改</el-button
         >
       </el-card>
     </div>
@@ -50,7 +57,7 @@
 
 <script setup>
 import { reactive, ref } from "vue";
-import { reqDoctor_add } from "@/api/doctor/index.js";
+import { reqDoctor_add, reqDoctor_upload } from "@/api/doctor/index.js";
 import { ElMessage } from "element-plus";
 
 //定义表单实例
@@ -91,15 +98,36 @@ const truePush = (addFormRef) => {
     if (valid) {
       console.log(addForm);
       const result = reqDoctor_add(addForm);
-      setTimeout(() => {
-        location.reload();
-      }, 3000);
+      // setTimeout(() => {
+      //   location.reload();
+      // }, 3000);
       if (result.code == 200) {
         ElMessage({
           message: "提交成功三秒后刷新表单",
           type: "success",
         });
       }
+    } else {
+      console.log("error submit!");
+    }
+  });
+};
+
+//改变数据
+const changeData = (addFormRef) => {
+  addFormRef.validate((valid) => {
+    if (valid) {
+      console.log(addForm);
+      reqDoctor_upload(addForm);
+
+      // setTimeout(() => {
+      //   location.reload();
+      // }, 3000);
+
+      ElMessage({
+        message: "修改成功三秒后刷新表单",
+        type: "success",
+      });
     } else {
       console.log("error submit!");
     }

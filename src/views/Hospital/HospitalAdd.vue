@@ -156,30 +156,29 @@ const beforeAvatarUpload = (rawFile) => {
 const changeAvatarUpload = () => {
   console.log(addForm.logoData);
 };
+const Tijiao = async () => {
+  const form = new FormData();
+  for (let [k, v] in Object.entries(addForm)) {
+    // console.log(k, v);
+    form.append(k, v);
+  }
+  console.log(addForm);
+  // console.log(form);
+  const result = await reqHospial_add(addForm);
+  console.log(result);
+  setTimeout(() => {
+    location.reload();
+  }, 1000);
+};
 //进行确认提交
 const truePush = (addFormRef) => {
   addFormRef.validate((valid) => {
     if (valid) {
-      // addForm.logoData = "";
-      // const result = reqHospial_add(addForm);
-      const form = new FormData();
-      for (let [k, v] in Object.entries(addForm)) {
-        console.log(k, v);
-        form.append(k, v);
-      }
-      console.log(addForm);
-      console.log(form);
-      const result = reqHospial_add(addForm);
-      // setTimeout(() => {
-      //   location.reload();
-      // }, 1000);
-
-      if (result.code == 200) {
-        ElMessage({
-          message: "提交成功",
-          type: "sucess",
-        });
-      }
+      Tijiao();
+      ElMessage({
+        message: "提交成功",
+        type: "sucess",
+      });
     } else {
       ElMessage({
         message: "提交失败",
@@ -189,29 +188,27 @@ const truePush = (addFormRef) => {
   });
 };
 //确定修改
+const isTure = async () => {
+  const form = new FormData();
+  for (let [k, v] in Object.entries(addForm)) {
+    console.log(k, v);
+    form.append(k, v);
+  }
+
+  const result = await reqHospial_upload(addForm);
+  setTimeout(() => {
+    location.reload();
+  }, 1000);
+};
 const changeData = (addFormRef) => {
-  console.log("~~~~~~~~~~~~~~~~~~~~~");
   addFormRef.validate((valid) => {
     if (valid) {
-      const form = new FormData();
-      for (let [k, v] in Object.entries(addForm)) {
-        console.log(k, v);
-        form.append(k, v);
-      }
-      console.log(addForm);
-      console.log(form);
-      const result = reqHospial_upload(addForm);
+      isTure();
 
-      setTimeout(() => {
-        location.reload();
-      }, 1000);
-
-      if (result.code == 200) {
-        ElMessage({
-          message: "修改成功",
-          type: "sucess",
-        });
-      }
+      ElMessage({
+        message: "修改成功",
+        type: "sucess",
+      });
     } else {
       ElMessage({
         message: "修改失败",
